@@ -6,7 +6,7 @@ import os
 
 def setup(self):
     os.system("rm -rf test.db")
-
+    # pass
 
 def run_script(commands):
     p = subprocess.Popen("./db test.db", stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -128,8 +128,7 @@ def test_db_persistence():
         "db > "
     )
 
-
-@pytest.mark.skip(reason="no way of currently testing this")
+@pytest.mark.skip(reason="no need")
 def test_db_one_node_btree():
     script = ""
     for i in [3, 1, 2]:
@@ -148,10 +147,10 @@ def test_db_one_node_btree():
         "db > Executed.\n"
         "db > Executed.\n"
         "db > Tree:\n"
-        "leaf (size 3)\n"
-        "  - 0 : 1\n"
-        "  - 1 : 2\n"
-        "  - 2 : 3\n"
+        "- leaf (size 3)\n"
+        "  - 1\n"
+        "  - 2\n"
+        "  - 3\n"
         "db > "
     )
 
@@ -178,7 +177,7 @@ def test_db_constants():
         "db > "
     )
 
-
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_db_duplicate():
     script = (
         "insert 1 user1 person1@example.com\n"
@@ -197,4 +196,42 @@ def test_db_duplicate():
         "db > (1, user1, person1@example.com)\n"
         "Executed.\n"
         "db > "
+    )
+
+
+def test_db_3_node_btree():
+    script = ""
+    for i in range(1,15):
+        script = script + f"insert {i} user{i} person{i}@example.com\n"
+
+    script = script+".btree\n"
+    script = script+"insert 15 user15 person15@example.com\n"
+    script = script+".exit\n"
+    # print(script)
+    out, err = run_script(script)
+    # if err:
+    #     out = out + "\n" + err
+
+    print(out)
+    assert out == "db > Executed.\n"*14+(
+        "db > Tree:\n"
+        "- internal (size 1)\n"
+        "  - leaf (size 7)\n"
+        "    - 1\n"
+        "    - 2\n"
+        "    - 3\n"
+        "    - 4\n"
+        "    - 5\n"
+        "    - 6\n"
+        "    - 7\n"
+        "  - key 7\n"
+        "  - leaf (size 7)\n"
+        "    - 8\n"
+        "    - 9\n"
+        "    - 10\n"
+        "    - 11\n"
+        "    - 12\n"
+        "    - 13\n"
+        "    - 14\n"
+        "db > Need to implement searching an internal node\n"
     )
