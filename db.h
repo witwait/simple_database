@@ -138,3 +138,4 @@ PrepareResult prepare_statement(InputBuffer *input_buffer, Statement *statement)
 ExecuteResult execute_insert(Statement *statement, Table *table);
 ExecuteResult execute_select(Statement *statement, Table *table);
 ExecuteResult execute_statement(Statement *statement, Table *table);
+Cursor *internal_node_find(Table* table,uint32_t page_naum,uint32_t key);

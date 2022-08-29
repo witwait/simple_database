@@ -49,7 +49,6 @@ def test_db():
     )
 
 
-@pytest.mark.skip(reason="no way of currently testing this")
 def test_db_full():
     script = ""
     for i in range(1401):
@@ -62,7 +61,7 @@ def test_db_full():
     outs = [out for out in outs.split('\n') if out]
     print(outs)
     # print(errs)
-    assert outs[-2] == 'db > Error: Table full.'
+    assert outs[-2:] == ['db > Executed.','db > Need to implement updating parent after split.']
 
 
 @pytest.mark.skip(reason="no way of currently testing this")
@@ -198,7 +197,7 @@ def test_db_duplicate():
         "db > "
     )
 
-
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_db_3_node_btree():
     script = ""
     for i in range(1,15):
@@ -233,5 +232,6 @@ def test_db_3_node_btree():
         "    - 12\n"
         "    - 13\n"
         "    - 14\n"
-        "db > Need to implement searching an internal node\n"
+        "db > Executed.\n"
+        "db > "
     )
