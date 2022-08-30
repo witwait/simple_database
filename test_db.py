@@ -48,7 +48,7 @@ def test_db():
         "db > "
     )
 
-
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_db_full():
     script = ""
     for i in range(1401):
@@ -169,9 +169,9 @@ def test_db_constants():
         "db > Constants:\n"
         "ROW_SIZE: 293\n"
         "COMMON_NODE_HEADER_SIZE: 6\n"
-        "LEAF_NODE_HEADER_SIZE: 10\n"
+        "LEAF_NODE_HEADER_SIZE: 14\n"
         "LEAF_NODE_CELL_SIZE: 297\n"
-        "LEAF_NODE_SPACE_FOR_CELLS: 4086\n"
+        "LEAF_NODE_SPACE_FOR_CELLS: 4082\n"
         "LEAF_NODE_MAX_CELLS: 13\n"
         "db > "
     )
@@ -197,7 +197,7 @@ def test_db_duplicate():
         "db > "
     )
 
-@pytest.mark.skip(reason="no way of currently testing this")
+# @pytest.mark.skip(reason="no way of currently testing this")
 def test_db_3_node_btree():
     script = ""
     for i in range(1,15):
