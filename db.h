@@ -140,3 +140,5 @@ ExecuteResult execute_select(Statement *statement, Table *table);
 ExecuteResult execute_statement(Statement *statement, Table *table);
 Cursor *internal_node_find(Table* table,uint32_t page_naum,uint32_t key);
 uint32_t *leaf_node_next_leaf(void *node);
+uint32_t *node_parent(void* node);
+void update_internal_node_key(void *node, uint32_t old_key, uint32_t new_key);
