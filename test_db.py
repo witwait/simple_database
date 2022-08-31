@@ -2,6 +2,7 @@ import pytest
 import subprocess
 import time
 import os
+import random
 
 
 def setup(self):
@@ -61,7 +62,7 @@ def test_db_full():
     outs = [out for out in outs.split('\n') if out]
     print(outs)
     # print(errs)
-    assert outs[-2:] == ['db > Executed.','db > Need to implement updating parent after split.']
+    assert outs[-2:] == ['db > Executed.','db > Need to implement splitting internal node']
 
 
 @pytest.mark.skip(reason="no way of currently testing this")
@@ -197,7 +198,7 @@ def test_db_duplicate():
         "db > "
     )
 
-# @pytest.mark.skip(reason="no way of currently testing this")
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_db_3_node_btree():
     script = ""
     for i in range(1,15):
@@ -232,6 +233,69 @@ def test_db_3_node_btree():
         "    - 12\n"
         "    - 13\n"
         "    - 14\n"
+        "db > Executed.\n"
+        "db > "
+    )
+
+# @pytest.mark.skip(reason="no way of currently testing this")
+def test_db_3_node_btree():
+    list = []
+    for i in range(1,31):
+        list.append(i)
+
+    random.shuffle(list)
+    script = ""
+    for i in list:
+        script = script + f"insert {i} user{i} person{i}@example.com\n"
+
+    script = script+".btree\n"
+    script = script+".exit\n"
+    # print(script)
+    out, err = run_script(script)
+    # if err:
+    #     out = out + "\n" + err
+
+    print(out)
+    assert out == "db > Executed.\n"*14+(
+        "db > Tree:\n"
+        "- internal (size 3)\n"
+        "  - leaf (size 7)\n"
+        "    - 1\n"
+        "    - 2\n"
+        "    - 3\n"
+        "    - 4\n"
+        "    - 5\n"
+        "    - 6\n"
+        "    - 7\n"
+        "  - key 7\n"
+        "  - leaf (size 8)\n"
+        "    - 8\n"
+        "    - 9\n"
+        "    - 10\n"
+        "    - 11\n"
+        "    - 12\n"
+        "    - 13\n"
+        "    - 14\n"
+        "    - 15\n"
+        "  - key 15\n"
+        "  - leaf (size 7)\n"
+        "    - 16\n"
+        "    - 17\n"
+        "    - 18\n"
+        "    - 19\n"
+        "    - 20\n"
+        "    - 21\n"
+        "    - 22\n"
+        "  - key 22\n"
+        "  - leaf (size 8)\n"
+        "    - 23\n"
+        "    - 24\n"
+        "    - 25\n"
+        "    - 26\n"
+        "    - 27\n"
+        "    - 28\n"
+        "    - 29\n"
+        "    - 30\n"
         "db > Executed.\n"
         "db > "
     )
